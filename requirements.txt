@@ -16,3 +16,5 @@ datasets
 biopython
 tiktoken
 pypdf
+matplotlib
+seaborn
