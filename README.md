@@ -11,7 +11,7 @@
 
 ## 📋 Contexte
 
-Ce projet construit un assistant de recherche biomédical capable de répondre à des questions sur l'impact du chômage post-diplôme sur la santé mentale des jeunes diplômés universitaires.
+Dans ce projet, j'ai construit un assistant de recherche biomédical capable de répondre à des questions sur l'impact du chômage post-diplôme sur la santé mentale des jeunes diplômés universitaires.
 
 Il s'inscrit dans la préparation d'une **revue systématique et méta-analyse** sur ce sujet, le système RAG sert d'outil d'exploration de la littérature scientifique.
 
@@ -179,7 +179,7 @@ streamlit run app.py
 - **Fine-tuning** d'un LLM médical (Mistral/Llama) sur des données annotées
 - **Connexion temps réel** à PubMed pour indexer les nouveaux articles
 - **Déploiement cloud** sur Hugging Face Spaces
-- **Intégration** dans le workflow de la méta-analyse
+- **Intégration** dans le workflow de ma méta-analyse : Impact de la transition post-diplôme et du chômage initial sur la santé mentale des jeunes diplômés universitaires. (Le projet qui m'a inspiré ce projet).
 
 ---
 
