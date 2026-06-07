@@ -1,11 +1,10 @@
 venv/
 .env
 data/raw/
-data/processed/
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 .vscode/
 .DS_Store
 Thumbs.db
-*.chroma
+*.cache

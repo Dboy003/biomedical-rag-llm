@@ -1,0 +1,26 @@
+{
+  "test_1_unemployment_mental_health": {
+    "question": "What are the main mental health consequences of unemployment in young university graduates?",
+    "mode": "strict",
+    "score_moyen": 0.6706,
+    "n_sources": 5
+  },
+  "test_2_precarious_employment": {
+    "question": "What is the role of precarious employment and job insecurity on psychological distress among recent graduates?",
+    "mode": "strict",
+    "score_moyen": 0.768,
+    "n_sources": 5
+  },
+  "test_3_cardiovascular_hors_domaine": {
+    "question": "What are the latest treatments for cardiovascular diseases in elderly patients?",
+    "mode": "fallback",
+    "score_moyen": 1.3379,
+    "n_sources": 5
+  },
+  "test_4_systematic_review_causality": {
+    "question": "What does the systematic review evidence say about the causal relationship between post-graduation unemployment and onset of depression and anxiety disorders in young adults?",
+    "mode": "strict",
+    "score_moyen": 0.7236,
+    "n_sources": 5
+  }
+}
