@@ -14,7 +14,7 @@ st.set_page_config(
     layout     = "wide"
 )
 
-API_URL = "http://localhost:8000"
+API_URL = "http://127.0.0.1:8000"
 
 # ============================================================
 # Fonctions utilitaires
@@ -48,7 +48,7 @@ def get_metrics():
 def get_health():
     """Vérifie la santé de l'API."""
     try:
-        response = requests.get(f"{API_URL}/health", timeout=30)
+        response = requests.get(f"{API_URL}/health", timeout=5)
         return response.status_code == 200
     except:
         return False
@@ -201,7 +201,7 @@ elif page == "📊 Évaluation du système":
 - **Mode Fallback** : 7/23 questions → questions hors domaine
         """)
     else:
-        st.error("Impossible de récupérer les métriques : vérifiez que l'API est connectée.")
+        st.error("Impossible de récupérer les métriques — vérifiez que l'API est connectée.")
 
 # ============================================================
 # PAGE 3 : À propos

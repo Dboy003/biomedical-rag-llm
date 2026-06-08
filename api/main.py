@@ -56,11 +56,19 @@ vectorstore = Chroma(
     collection_name    = "pubmed_biomedical"
 )
 
-llm = ChatGroq(
-    model       = "llama-3.3-70b-versatile",
-    temperature = 0.1,
-    api_key     = GROQ_API_KEY
-)
+# Fallback automatique si limite Groq atteinte
+def creer_llm(model="llama-3.3-70b-versatile"):
+    return ChatGroq(
+        model       = model,
+        temperature = 0.1,
+        api_key     = GROQ_API_KEY
+    )
+
+llm = creer_llm("llama-3.3-70b-versatile")
+LLM_FALLBACK = creer_llm("llama-3.1-8b-instant")
+
+print(" LLM principal : Llama 3.3 70B")
+print(" LLM fallback  : Llama 3.1 8B")
 
 # Paramètres RAG
 SEUIL_PERTINENCE = 0.80
@@ -188,7 +196,7 @@ def query(data: QueryInput):
             query=data.question, k=data.k
         )
         scores      = [score for _, score in docs_scores]
-        score_moyen = sum(scores) / len(scores)
+        score_moyen = sum(scores) / len(scores) if len(scores) > 0 else 1.0
 
         # Choix du mode
         if score_moyen < SEUIL_PERTINENCE:
@@ -198,13 +206,25 @@ def query(data: QueryInput):
             mode   = "fallback"
             prompt = PROMPT_FALLBACK
 
-        # Génération
+        # Génération — tentative avec le modèle principal, fallback si limite atteinte
         contexte = formater_contexte(docs_scores)
-        chain    = prompt | llm | StrOutputParser()
-        answer   = chain.invoke({
-            "question": data.question,
-            "context" : contexte
-        })
+        try:
+            chain  = prompt | llm | StrOutputParser()
+            answer = chain.invoke({
+                "question": data.question,
+                "context" : contexte
+            })
+        except Exception as e:
+            if "rate_limit" in str(e).lower() or "429" in str(e):
+                print("⚠️ Rate limit atteint — basculement sur Llama 8B")
+                chain  = prompt | LLM_FALLBACK | StrOutputParser()
+                answer = chain.invoke({
+                    "question": data.question,
+                    "context" : contexte
+                })
+                answer = "⚠️ *Réponse générée par Llama 3.1 8B (limite quotidienne Llama 70B atteinte)*\n\n" + answer
+            else:
+                raise e
 
         return QueryOutput(
             question    = data.question,
@@ -217,22 +237,28 @@ def query(data: QueryInput):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
 @app.get("/metrics")
 def metrics():
     metrics_path = DATA_DIR / "metriques_ragas.csv"
     if not metrics_path.exists():
         raise HTTPException(status_code=404, detail="Metrics not found")
-
+    
     import pandas as pd
+    import numpy as np
     df = pd.read_csv(metrics_path)
-
+    
+    # Remplacement des NaN par None pour la compatibilité JSON
+    df = df.replace({np.nan: None})
+    
+    # Calcul des moyennes en ignorant les None
+    ctx  = df["context_relevance"].dropna().mean()
+    faith = df["faithfulness"].dropna().mean()
+    ans  = df["answer_relevancy"].dropna().mean()
+    
     return {
         "n_questions"       : len(df),
-        "context_relevance" : round(df["context_relevance"].mean(), 3),
-        "faithfulness"      : round(df["faithfulness"].mean(), 3),
-        "answer_relevancy"  : round(df["answer_relevancy"].mean(), 3),
-        "global_score"      : round(df[["context_relevance",
-                                        "faithfulness",
-                                        "answer_relevancy"]].mean().mean(), 3)
+        "context_relevance" : round(float(ctx), 3),
+        "faithfulness"      : round(float(faith), 3),
+        "answer_relevancy"  : round(float(ans), 3),
+        "global_score"      : round(float((ctx + faith + ans) / 3), 3)
     }
