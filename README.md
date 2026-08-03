@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Contexte
+## Contexte
 
 Dans ce projet, j'ai construit un assistant de recherche biomédical capable de répondre à des questions sur l'impact du chômage post-diplôme sur la santé mentale des jeunes diplômés universitaires.
 
@@ -17,7 +17,7 @@ Il s'inscrit dans la préparation d'une **revue systématique et méta-analyse**
 
 ---
 
-## 🏗️ Architecture du projet
+## Architecture du projet
 
 ```text
 biomedical-rag-llm/
@@ -38,7 +38,7 @@ biomedical-rag-llm/
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 - **Source** : API PubMed (Entrez/Biopython)
 - **Période** : 2000 à 2025
@@ -51,7 +51,13 @@ biomedical-rag-llm/
 
 ---
 
-## 🔧 Pipeline RAG
+## Démo déployé sur Render
+
+**Base URL** : `https://biomedical-rag-api.onrender.com`
+
+---
+
+## Pipeline RAG
 
 ```text
 Question utilisateur
@@ -72,7 +78,7 @@ Réponse + Sources PubMed citées
 ```
 ---
 
-## 🤖 Stack technique
+## Stack technique
 
 | Composant | Technologie |
 |-----------|-------------|
@@ -86,7 +92,7 @@ Réponse + Sources PubMed citées
 
 ---
 
-## 📏 Évaluation RAGAS
+## Évaluation RAGAS
 
 Évaluation sur **16 questions** en mode Strict :
 
@@ -99,7 +105,7 @@ Réponse + Sources PubMed citées
 
 ---
 
-## 🚀 API
+## API
 
 **Base URL** : `http://127.0.0.1:8000`
 
@@ -147,7 +153,7 @@ curl -X POST "http://127.0.0.1:8000/query" \
 
 ---
 
-## 🛠️ Installation locale
+## Installation locale
 
 ```bash
 # Cloner le repo
@@ -174,7 +180,7 @@ streamlit run app.py
 
 ---
 
-## 🔮 Perspectives
+## Perspectives
 
 - **Fine-tuning** d'un LLM médical (Mistral/Llama) sur des données annotées
 - **Connexion temps réel** à PubMed pour indexer les nouveaux articles

@@ -1,6 +1,7 @@
 
 import streamlit as st
 import requests
+import time
 import json
 from pathlib import Path
 
@@ -14,7 +15,7 @@ st.set_page_config(
     layout     = "wide"
 )
 
-API_URL = "http://127.0.0.1:8000"
+API_URL = "http://127.0.0.1:8001"
 
 # ============================================================
 # Fonctions utilitaires
@@ -44,14 +45,26 @@ def get_metrics():
         return None
     except:
         return None
-
+    
 def get_health():
-    """Vérifie la santé de l'API."""
-    try:
-        response = requests.get(f"{API_URL}/health", timeout=5)
-        return response.status_code == 200
-    except:
-        return False
+    for _ in range(6):
+        try:
+            response = requests.get(f"{API_URL}/health", timeout=3)
+            if response.status_code == 200:
+                return True
+            print("health status", response.status_code, response.text)
+        except Exception as e:
+            print("health error", e)
+        time.sleep(1)
+    return False   
+
+#def get_health():
+    #"""Vérifie la santé de l'API."""
+    #try:
+        #response = requests.get(f"{API_URL}/health", timeout=5)
+        #return response.status_code == 200
+    #except:
+        #return False
 
 # ============================================================
 # Sidebar
@@ -233,7 +246,7 @@ elif page == "📚 À propos":
 
     ### 🔗 Liens
     - **GitHub** : [Dboy003/biomedical-rag-llm](https://github.com/Dboy003/biomedical-rag-llm)
-    - **API Docs** : [FastAPI Swagger](http://127.0.0.1:8000/docs)
+    - **API Docs** : [FastAPI Swagger](http://127.0.0.1:8001/docs)
 
     ### 👤 Auteur
     **Mourad DO-REGO** : Data Scientist / Biostatisticien
