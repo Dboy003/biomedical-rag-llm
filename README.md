@@ -53,7 +53,7 @@ biomedical-rag-llm/
 
 ## Démo déployé sur Render
 
-**Base URL** : `https://biomedical-rag-api.onrender.com`
+**Base URL** : https://biomedical-rag-api.onrender.com
 
 ---
 

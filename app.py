@@ -1,5 +1,6 @@
 
 import streamlit as st
+import os
 import requests
 import time
 import json
@@ -15,7 +16,7 @@ st.set_page_config(
     layout     = "wide"
 )
 
-API_URL = "http://127.0.0.1:8001"
+API_URL = os.environ.get("API_URL", "http://localhost:8001")
 
 # ============================================================
 # Fonctions utilitaires
