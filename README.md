@@ -9,6 +9,21 @@
 
 ---
 
+## Aperçu du Dashboard
+
+### Page principal
+![Dashboard Demo](assets/dashboard_demo.png)
+
+Interface interactive permettant de poser des questions sur la santé mentale des jeunes diplômés et d'obtenir des réponses sourcées depuis PubMed.
+
+### Métriques RAGAS
+![Dashboard_eval](assets/dashboard_eval.png)
+
+### L'architecture du système
+![Dashboard_apropos](assets/dashboard_apropos.png)
+
+---
+
 ## Contexte
 
 Dans ce projet, j'ai construit un assistant de recherche biomédical capable de répondre à des questions sur l'impact du chômage post-diplôme sur la santé mentale des jeunes diplômés universitaires.
@@ -48,12 +63,6 @@ biomedical-rag-llm/
   - Transition post-diplôme et santé mentale
   - Emploi précaire et détresse psychologique
   - Revues systématiques sur le sujet
-
----
-
-## Démo déployé sur Render
-
-**Base URL** : https://biomedical-rag-api.onrender.com
 
 ---
 
